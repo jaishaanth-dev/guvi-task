@@ -53,13 +53,14 @@ function updateUserProfile($payload){
     
     $updatedDocument = $mongoClient->guvi->users->updateOne(['userId'=>$userId],['$set'=> ["dob" => $payload["dob"],"age"=>$payload["age"],"contact"=> $payload["contact"]]]);
 
+    
     if($updatedDocument->getMatchedCount() < 1){ 
         return [
             "success"=>false,
             "message"=>"User Info not found",
         ];
     }
-
+    
     if($updatedDocument->getModifiedCount() > 0) {
         return [
             "success"=>true,

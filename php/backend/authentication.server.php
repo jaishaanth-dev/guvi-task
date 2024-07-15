@@ -99,6 +99,8 @@ function login($userName, $password){
     }
 }
 
+// echo json_encode(login("jai11","jai123"));
+
 function getUserSession($sessionId){
     if ($sessionId) {
         include "./database.php";
