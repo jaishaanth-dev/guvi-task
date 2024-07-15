@@ -61,22 +61,16 @@ $(document).ready(function () {
         "Content-type": "application/x-www-form-urlencoded",
       },
       success: function (response) {
-        const responseJson = JSON.parse(response.data);
-
-        console.log({ responseJson });
-
-        alert(responseJson.message);
-
-        if (responseJson.success) {
+        alert(response.message);
+        if (response.success) {
           window.location.href = "login.html";
           return;
         }
-
         //handle errors
       },
       error: function (xhr, status, error) {
         console.log({ xhr, status, error });
-        console.error(status, error);
+        console.error({ status, error });
       },
     });
   });
@@ -101,13 +95,8 @@ $(document).ready(function () {
         "Content-type": "application/x-www-form-urlencoded",
       },
       success: function (response) {
-        console.log(response)
-        // const responseJson = JSON.parse(response.data);
-
-        // console.log({ responseJson });
-
-       /* if (responseJson.success) {
-          const sessionId = responseJson.data.sessionId;
+        if (response.success) {
+          const sessionId = response.data.sessionId;
 
           if (!sessionId) {
             alert("Something gone wrong.. Please Try again");
@@ -121,13 +110,13 @@ $(document).ready(function () {
           return;
         }
 
-        alert(responseJson.message);*/
+        alert(response.message);
 
         //handle errors
       },
       error: function (xhr, status, error) {
         console.log({ xhr, status, error });
-        console.error({status, error});
+        console.error({ status, error });
       },
     });
   });

@@ -22,7 +22,6 @@
                                         );"; 
     mysqli_query($mysqlClient,$mysqlUsersTable);
  
-    echo"5";
     // mongodb
     $mongoClient = new MongoDB\Client($_ENV["MONGODB_URI"]);
 

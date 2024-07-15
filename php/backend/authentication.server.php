@@ -3,9 +3,7 @@
 function userRegistration($userName,$email,$password){
     include "./database.php";
     if (empty($userName) || empty($email) || empty($password)){
-        return [
-            'data' => json_encode(["success"=>false,"message"=>"All Fields are required"])
-        ];
+        return json_encode(["success"=>false,"message"=>"All Fields are required"]);
     }
 
     $userId=uniqid();
@@ -21,9 +19,7 @@ function userRegistration($userName,$email,$password){
     $rnum = $stmt->num_rows;
 
     if ($rnum != 0) {
-      return [
-        'data' => json_encode(["success"=>false,"message"=>"Someone already register using this emai"])
-      ];
+      return json_encode(["success"=>false,"message"=>"Someone already register using this emai"]);
     } 
 
     $stmt->close();
@@ -43,14 +39,12 @@ function userRegistration($userName,$email,$password){
     $insertResult = $collection->insertOne($document);
 
     if ($insertResult->getInsertedCount() === 1) {
-      return [
-        'data' => json_encode(["success" => true, "message" => "Account Registered. Please Login to continue"])
-      ];
+      
+      return json_encode(["success" => true, "message" => "Account Registered. Please Login to continue"]);
     } 
     
-    return [
-      'data' => json_encode(["success" => false, "message" => "Failed to register the account"])
-    ];
+    return json_encode(["success" => false, "message" => "Failed to register the account"]);
+  
 }
 
 function login($userName, $password){
@@ -63,7 +57,7 @@ function login($userName, $password){
             $user_data = mysqli_fetch_assoc($result);
 
             if($user_data['password'] != $password){
-              return [];
+              return json_encode(["success" => false, "message" => "Incorrect Password."]);
             }
 
             $sessionId = uniqid();
@@ -78,24 +72,19 @@ function login($userName, $password){
             
             $redisClient->setex($sessionId, $sessionExpiryTime, json_encode($sessionData));
 
-            return [
-              'data' => json_encode([
+            return  json_encode([
                 'success' => true, 
                 'message' => "Successfully Logged in",
                 'data'=>[
                   'sessionId' => $sessionId
                 ]
-              ])
-            ];
+                ]);
         }
-        return [
-            'data' => json_encode(["success" => false, "message" => "Account not found / Username or password is invalid."])
-        ];
+        return  json_encode(["success" => false, "message" => "Account not found / Username or password is invalid."]);
+        
     }
     else {
-        return [
-            'data' => json_encode(["success" => false, "message" => "Required Fields are missing."])
-        ];
+        return  json_encode(["success" => false, "message" => "Required Fields are missing."]);
     }
 }
 
@@ -126,11 +115,9 @@ try {
           $userName = $_POST['userName'];
           $email = $_POST['email'];
           $password = $_POST['password'];
-
+    
           $result = userRegistration($userName, $email, $password);
-
-          header('Content-Type: application/json; charset=utf-8');
-          echo json_encode($result);
+          echo $result;
           die();
         }
 
@@ -140,8 +127,7 @@ try {
 
           $result = login($userName, $password);
 
-          header('Content-Type: application/json; charset=utf-8');
-          echo json_encode($result);
+          echo $result;
           die();
         }
 
