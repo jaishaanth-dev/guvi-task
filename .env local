@@ -1,0 +1,9 @@
+#mysql
+MYSQL_HOST=localhost
+MYSQL_DBNAME=""
+MYSQL_USERNAME="root"
+MYSQL_PASSWORD=""
+
+
+#mongodb
+MONGODB_URI=""
